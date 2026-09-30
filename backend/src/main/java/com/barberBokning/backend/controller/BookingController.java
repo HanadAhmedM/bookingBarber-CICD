@@ -10,7 +10,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
-
+ 
+    
     private final BookingService bookingService;
 
     public BookingController(BookingService bookingService) {
@@ -29,10 +30,20 @@ public class BookingController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Booking createBooking(@RequestBody Booking booking) {
-        return bookingService.createBooking(booking);
+  @PostMapping
+public ResponseEntity<?> createBooking(@RequestBody Booking booking) {
+
+    try {
+        return ResponseEntity.ok(
+                bookingService.createBooking(booking)
+        );
+
+    } catch (IllegalStateException e) {
+        return ResponseEntity
+                .status(409)
+                .body(e.getMessage());
     }
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
