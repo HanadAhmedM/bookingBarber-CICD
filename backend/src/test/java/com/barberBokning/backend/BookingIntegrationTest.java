@@ -11,7 +11,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,4 +59,32 @@ class BookingIntegrationTest {
                 .andExpect(jsonPath("$[0].customerEmail")
                         .value("john@example.com"));
     }
+
+    @Test
+void shouldRejectDoubleBooking() throws Exception {
+
+    String bookingJson = """
+            {
+                "customerName": "John Doe",
+                "customerEmail": "john@example.com",
+                "barber": "Ahmed",
+                "service": "Haircut",
+                "bookingDate": "2026-10-01",
+                "bookingTime": "14:30:00"
+            }
+            """;
+
+    // Första bokningen ska fungera
+    mockMvc.perform(post("/api/bookings")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(bookingJson))
+            .andExpect(status().isOk());
+
+    // Samma barber + datum + tid ska nekas
+    mockMvc.perform(post("/api/bookings")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(bookingJson))
+            .andExpect(status().isConflict())
+            .andExpect(content().string("Den här tiden är redan bokad."));
+}
 }
