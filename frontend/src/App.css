@@ -1,0 +1,890 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #151214;
+  color: #e5d19a;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+
+  width: 100%;
+
+  background: #151214;
+  border-bottom: 1px solid #3f3528;
+
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.header-inner {
+  max-width: 1250px;
+  height: 76px;
+
+  margin: 0 auto;
+  padding: 0 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* LOGO */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  text-decoration: none;
+  color: #d6b96c;
+}
+
+.brand img {
+  width: 48px;
+  height: 48px;
+
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-text span {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.brand-text small {
+  margin-top: 3px;
+
+  color: #9c804b;
+
+  font-size: 8px;
+  letter-spacing: 3px;
+}
+
+/* NAVIGATION */
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.main-nav a {
+  position: relative;
+
+  color: #c9bb98;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  transition: color 0.2s;
+}
+
+.main-nav a:hover {
+  color: #e1c574;
+}
+
+.main-nav a::after {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  bottom: -8px;
+
+  width: 0;
+  height: 1px;
+
+  background: #d6b96c;
+
+  transition: width 0.2s;
+}
+
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+/* HEADER ACTIONS */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.language-button,
+.login-button {
+  padding: 9px 14px;
+
+  border-radius: 3px;
+
+  font-size: 13px;
+}
+
+.language-button {
+  background: transparent;
+
+  border: 1px solid #51452f;
+
+  color: #c9bb98;
+}
+
+.language-button:hover {
+  border-color: #d6b96c;
+}
+
+.login-button {
+  background: #d6b96c;
+
+  border: 1px solid #d6b96c;
+
+  color: #151214;
+
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background: #e6ce88;
+}
+
+.mobile-menu {
+  display: none;
+
+  border: none;
+  background: transparent;
+
+  color: #d6b96c;
+
+  font-size: 27px;
+}
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+  min-height: 470px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background:
+    linear-gradient(
+      rgba(15, 12, 13, 0.76),
+      rgba(15, 12, 13, 0.92)
+    ),
+    url('/diamond-logo.jpg');
+
+  background-size: cover;
+  background-position: center;
+
+  border-bottom: 1px solid #3f3528;
+}
+
+.hero-content {
+  max-width: 700px;
+  padding: 40px 20px;
+}
+
+.hero-label {
+  color: #b99752;
+
+  font-size: 12px;
+  letter-spacing: 5px;
+}
+
+.hero h1 {
+  margin: 20px 0;
+
+  font-family: Georgia, 'Times New Roman', serif;
+
+  font-size: clamp(42px, 7vw, 75px);
+
+  line-height: 1.05;
+
+  color: #f0dfad;
+
+  font-weight: 500;
+}
+
+.hero h1 span {
+  color: #c8a85c;
+}
+
+.hero p {
+  color: #a99b7d;
+
+  font-size: 16px;
+
+  margin-bottom: 30px;
+}
+
+.hero-button {
+  display: inline-block;
+
+  padding: 15px 35px;
+
+  background: #d6b96c;
+  color: #151214;
+
+  text-decoration: none;
+
+  font-weight: bold;
+
+  border-radius: 3px;
+}
+
+.hero-button:hover {
+  background: #e5cc87;
+}
+
+/* =========================================
+   BOOKING
+========================================= */
+
+.booking-container {
+  width: 100%;
+
+  padding: 70px 20px;
+
+  background: #191617;
+}
+
+.booking-card {
+  width: 100%;
+  max-width: 760px;
+
+  margin: 0 auto;
+
+  padding: 45px;
+
+  background: #211c1d;
+
+  border: 1px solid #6b5733;
+
+  border-radius: 4px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.45),
+    inset 0 0 40px rgba(214, 185, 108, 0.025);
+}
+
+/* BOOKING HEADER */
+
+.booking-header {
+  text-align: center;
+
+  margin-bottom: 40px;
+}
+
+.section-label {
+  color: #a3844b;
+
+  font-size: 10px;
+  letter-spacing: 4px;
+}
+
+.booking-header h2 {
+  margin: 10px 0;
+
+  color: #e2c878;
+
+  font-family: Georgia, 'Times New Roman', serif;
+
+  font-size: 34px;
+
+  font-weight: 500;
+}
+
+.booking-header p {
+  margin: 0;
+
+  color: #95876c;
+
+  font-size: 14px;
+}
+
+/* =========================================
+   STEPS
+========================================= */
+
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 45px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #665b4b;
+}
+
+.step span {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #554831;
+
+  border-radius: 50%;
+
+  font-size: 12px;
+}
+
+.step p {
+  margin: 0;
+
+  font-size: 12px;
+}
+
+.step.active {
+  color: #d6b96c;
+}
+
+.step.active span {
+  background: #d6b96c;
+
+  border-color: #d6b96c;
+
+  color: #171416;
+
+  font-weight: bold;
+}
+
+.step-line {
+  width: 35px;
+  height: 1px;
+
+  margin: 0 10px;
+
+  background: #4c402e;
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.step-content h3 {
+  margin: 0 0 6px;
+
+  color: #e0c477;
+
+  font-family: Georgia, 'Times New Roman', serif;
+
+  font-size: 25px;
+}
+
+.step-description {
+  margin-top: 0;
+  margin-bottom: 25px;
+
+  color: #96896f;
+
+  font-size: 14px;
+}
+
+/* =========================================
+   SERVICES
+========================================= */
+
+.service-list {
+  display: grid;
+  gap: 13px;
+}
+
+.service-card {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 21px;
+
+  text-align: left;
+
+  background: #191617;
+
+  border: 1px solid #4e412c;
+
+  border-radius: 3px;
+
+  color: #e1ce9b;
+
+  transition: 0.2s;
+}
+
+.service-card:hover {
+  border-color: #c3a45b;
+
+  background: #251f1e;
+
+  transform: translateY(-2px);
+}
+
+.service-card.selected {
+  border-color: #d6b96c;
+
+  background: #29221d;
+
+  box-shadow:
+    inset 0 0 25px rgba(214, 185, 108, 0.06);
+}
+
+.service-info h4 {
+  margin: 0 0 7px;
+
+  color: #e3cc8c;
+
+  font-size: 18px;
+}
+
+.service-info p {
+  margin: 0 0 8px;
+
+  color: #95886d;
+
+  font-size: 13px;
+}
+
+.service-info span {
+  color: #71654e;
+
+  font-size: 12px;
+}
+
+.service-card > strong {
+  color: #d6b96c;
+
+  white-space: nowrap;
+}
+
+/* =========================================
+   BARBERS
+========================================= */
+
+.barber-list {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 15px;
+}
+
+.barber-card {
+  padding: 25px 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 12px;
+
+  background: #191617;
+
+  border: 1px solid #4e412c;
+
+  border-radius: 3px;
+
+  color: #d6b96c;
+}
+
+.barber-card:hover,
+.barber-card.selected {
+  border-color: #d6b96c;
+
+  background: #29221d;
+}
+
+.barber-avatar {
+  width: 55px;
+  height: 55px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #9b7e42;
+
+  border-radius: 50%;
+
+  background: #241e1e;
+
+  color: #d6b96c;
+
+  font-size: 22px;
+}
+
+.barber-card h4 {
+  margin: 0 0 4px;
+
+  text-align: center;
+
+  color: #dfca8d;
+}
+
+.barber-card p {
+  margin: 0;
+
+  text-align: center;
+
+  color: #82755e;
+
+  font-size: 12px;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.step-content label {
+  display: block;
+
+  margin: 15px 0 8px;
+
+  color: #b6a57e;
+
+  font-size: 13px;
+}
+
+.date-input,
+.text-input {
+  width: 100%;
+
+  padding: 14px;
+
+  background: #171416;
+
+  border: 1px solid #51442e;
+
+  border-radius: 3px;
+
+  color: #dfca8d;
+
+  font-size: 15px;
+}
+
+.date-input:focus,
+.text-input:focus {
+  outline: none;
+
+  border-color: #d6b96c;
+}
+
+input::placeholder {
+  color: #706550;
+}
+
+/* =========================================
+   TIMES
+========================================= */
+
+.time-list {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.time-button {
+  padding: 13px;
+
+  background: #191617;
+
+  border: 1px solid #4e412c;
+
+  border-radius: 3px;
+
+  color: #cbb77e;
+}
+
+.time-button:hover,
+.time-button.selected {
+  background: #d6b96c;
+
+  border-color: #d6b96c;
+
+  color: #171416;
+}
+
+/* =========================================
+   CONFIRMATION
+========================================= */
+
+.confirmation {
+  margin-bottom: 25px;
+
+  padding: 20px;
+
+  background: #191617;
+
+  border: 1px solid #51442e;
+
+  border-radius: 3px;
+}
+
+.confirmation div {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 10px 0;
+
+  border-bottom: 1px solid #2e2722;
+}
+
+.confirmation div:last-child {
+  border-bottom: none;
+}
+
+.confirmation span {
+  color: #82765f;
+
+  font-size: 13px;
+}
+
+.confirmation strong {
+  color: #d6b96c;
+
+  font-size: 14px;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.navigation {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 40px;
+
+  padding-top: 25px;
+
+  border-top: 1px solid #3b3127;
+}
+
+.back-button,
+.continue-button {
+  padding: 14px 24px;
+
+  border-radius: 3px;
+
+  font-size: 14px;
+}
+
+.back-button {
+  background: transparent;
+
+  border: 1px solid #51442e;
+
+  color: #b9a67b;
+}
+
+.back-button:hover {
+  border-color: #d6b96c;
+
+  color: #d6b96c;
+}
+
+.continue-button {
+  background: #d6b96c;
+
+  border: 1px solid #d6b96c;
+
+  color: #171416;
+
+  font-weight: bold;
+}
+
+.continue-button:hover {
+  background: #e4cb84;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer {
+  padding: 40px 20px;
+
+  text-align: center;
+
+  background: #111011;
+
+  border-top: 1px solid #3b3127;
+
+  color: #766a55;
+}
+
+.footer-logo {
+  color: #c4a45a;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  letter-spacing: 4px;
+}
+
+.footer-logo span {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 8px;
+
+  letter-spacing: 4px;
+
+  color: #76613a;
+}
+
+.footer p {
+  margin: 18px 0 0;
+
+  font-size: 12px;
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .main-nav,
+  .header-actions {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+  }
+
+  .header-inner {
+    height: 68px;
+
+    padding: 0 16px;
+  }
+
+  .brand img {
+    width: 43px;
+    height: 43px;
+  }
+
+  .brand-text span {
+    font-size: 17px;
+  }
+
+  .hero {
+    min-height: 400px;
+  }
+
+  .booking-card {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .booking-container {
+    padding: 35px 12px;
+  }
+
+  .booking-card {
+    padding: 28px 17px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .steps {
+    justify-content: space-between;
+  }
+
+  .step p {
+    display: none;
+  }
+
+  .step-line {
+    flex: 1;
+
+    margin: 0 5px;
+  }
+
+  .barber-list {
+    grid-template-columns: 1fr;
+  }
+
+  .barber-card {
+    flex-direction: row;
+
+    justify-content: flex-start;
+
+    padding: 16px;
+  }
+
+  .barber-card h4,
+  .barber-card p {
+    text-align: left;
+  }
+
+  .time-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .navigation {
+    gap: 10px;
+  }
+
+  .back-button,
+  .continue-button {
+    padding: 13px 16px;
+  }
+}
