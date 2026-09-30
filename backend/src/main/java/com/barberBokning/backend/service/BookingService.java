@@ -23,10 +23,23 @@ public class BookingService {
     public Optional<Booking> getBookingById(Long id) {
         return bookingRepository.findById(id);
     }
+public Booking createBooking(Booking booking) {
 
-    public Booking createBooking(Booking booking) {
-        return bookingRepository.save(booking);
+    boolean alreadyBooked =
+            bookingRepository.existsByBarberAndBookingDateAndBookingTime(
+                    booking.getBarber(),
+                    booking.getBookingDate(),
+                    booking.getBookingTime()
+            );
+
+    if (alreadyBooked) {
+        throw new IllegalStateException(
+                "Den här tiden är redan bokad."
+        );
     }
+
+    return bookingRepository.save(booking);
+}
 
     public void deleteBooking(Long id) {
         bookingRepository.deleteById(id);
