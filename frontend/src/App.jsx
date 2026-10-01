@@ -671,9 +671,10 @@ function App() {
                       >
 
                         <button
-                          className="day-header"
-                          onClick={() => selectDate(day.date)}
-                        >
+  className="day-header"
+  data-testid={`day-${day.date}`}
+  onClick={() => selectDate(day.date)}
+>
                           <span>
                             {day.dayName}
                           </span>
@@ -702,27 +703,20 @@ function App() {
 
                             return (
                               <button
-                                key={time}
-                                disabled={booked}
-                                className={`week-time ${
-                                  selected
-                                    ? 'selected'
-                                    : ''
-                                } ${
-                                  booked
-                                    ? 'booked'
-                                    : ''
-                                }`}
-                                onClick={() => {
-                                  setBooking({
-                                    ...booking,
-                                    date: day.date,
-                                    time,
-                                  })
-                                }}
-                              >
-                                {booked ? 'Bokad' : time}
-                              </button>
+  key={time}
+  disabled={booked}
+  data-testid={`time-${day.date}-${time}`}
+  className={`week-time ${selected ? 'selected' : ''} ${booked ? 'booked' : ''}`}
+  onClick={() => {
+    setBooking({
+      ...booking,
+      date: day.date,
+      time,
+    })
+  }}
+>
+  {booked ? 'Bokad' : time}
+</button>
                             )
                           })}
 
