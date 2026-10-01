@@ -83,7 +83,7 @@ function App() {
 
   const [confirmedBooking, setConfirmedBooking] = useState(null)
   const [message, setMessage] = useState('')
-
+const API_URL = import.meta.env.VITE_API_URL || ''
   const weekDays = getWeekDays()
 
   useEffect(() => {
@@ -92,7 +92,8 @@ function App() {
 
   const loadBookings = async () => {
     try {
-      const response = await fetch('/api/bookings')
+      const response = await fetch(`${API_URL}/api/bookings`)
+
 
       if (!response.ok) {
         throw new Error('Kunde inte hämta bokningar')
