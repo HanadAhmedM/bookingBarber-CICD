@@ -41,10 +41,29 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+  # ✅ Körs alltid – både på PR och push – ger en tydlig grön bock i PR:en
+  checks-passed:
+    name: All checks passed
+    runs-on: ubuntu-latest
+    needs: [test-backend, test-frontend]
+    if: always()
+    steps:
+      - name: Verify all tests succeeded
+        run: |
+          echo "backend:  ${{ needs.test-backend.result }}"
+          echo "frontend: ${{ needs.test-frontend.result }}"
+          if [ "${{ needs.test-backend.result }}" != "success" ] || \
+             [ "${{ needs.test-frontend.result }}" != "success" ]; then
+            echo "❌ Något test misslyckades"
+            exit 1
+          fi
+          echo "✅ Alla tester OK"
+
   deploy-production:
     name: Deploy to Render Production
     runs-on: ubuntu-latest
     needs: [test-backend, test-frontend]
+    # Endast på push till dev – aldrig på PR
     if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
     steps:
       - name: Trigger Render deploy hook
