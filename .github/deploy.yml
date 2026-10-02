@@ -1,14 +1,13 @@
-cd ~/bookingBarber-CICD
-
 cat > .github/workflows/deploy.yml << 'EOF'
 name: Deploy to Render Production
 
 on:
   push:
     branches: [dev]
-  workflow_dispatch:
- pull_request:
+  pull_request:
     branches: [dev]
+  workflow_dispatch:
+
 jobs:
   test-backend:
     name: Test backend
@@ -46,7 +45,7 @@ jobs:
     name: Deploy to Render Production
     runs-on: ubuntu-latest
     needs: [test-backend, test-frontend]
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
     steps:
       - name: Trigger Render deploy hook
         run: |
@@ -54,6 +53,3 @@ jobs:
           curl -fsS -X POST "${{ secrets.RENDER_PROD_DEPLOY_HOOK }}"
           echo "Deploy triggered ✅"
 EOF
-
-ls -la .github/workflows/
-cat .github/workflows/deploy.yml
