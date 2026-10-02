@@ -1,5 +1,6 @@
 package com.b.backend.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,11 @@ public class CorsConfig {
 
     @Value("${app.cors.allowed-origins:http://localhost:5173}")
     private String allowedOrigins;
+
+    @PostConstruct
+    public void logCors() {
+        System.out.println(">>> CORS allowed origins: [" + allowedOrigins + "]");
+    }
 
     @Bean
     public CorsFilter corsFilter() {
