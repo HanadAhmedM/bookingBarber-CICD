@@ -1,0 +1,102 @@
+name: Deploy to Render
+
+on:
+workflow_run:
+workflows:
+- CI
+- E2E Tests
+types:
+- completed
+
+workflow_dispatch:
+
+permissions:
+actions: read
+contents: read
+
+jobs:
+deploy:
+name: Deploy to Render
+runs-on: ubuntu-latest
+
+
+# Only continue when a workflow has completed successfully
+# and the workflow belongs to the dev branch.
+if: >
+  github.event_name == 'workflow_dispatch' ||
+  (
+    github.event.workflow_run.conclusion == 'success' &&
+    github.event.workflow_run.head_branch == 'dev'
+  )
+
+steps:
+  - name: Check CI and E2E status
+    if: github.event_name == 'workflow_run'
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      COMMIT_SHA: ${{ github.event.workflow_run.head_sha }}
+    run: |
+      echo "Checking CI and E2E for commit:"
+      echo "$COMMIT_SHA"
+
+      CI_STATUS=$(gh run list \
+        --repo "$REPO" \
+        --workflow "CI" \
+        --branch dev \
+        --commit "$COMMIT_SHA" \
+        --limit 1 \
+        --json conclusion \
+        --jq '.[0].conclusion // empty')
+
+      E2E_STATUS=$(gh run list \
+        --repo "$REPO" \
+        --workflow "E2E Tests" \
+        --branch dev \
+        --commit "$COMMIT_SHA" \
+        --limit 1 \
+        --json conclusion \
+        --jq '.[0].conclusion // empty')
+
+      echo "CI status:  $CI_STATUS"
+      echo "E2E status: $E2E_STATUS"
+
+      if [ "$CI_STATUS" != "success" ]; then
+        echo "CI has not passed."
+        exit 1
+      fi
+
+      if [ "$E2E_STATUS" != "success" ]; then
+        echo "E2E tests have not passed."
+        exit 1
+      fi
+
+      echo "CI and E2E are both GREEN."
+      echo "Deployment is allowed."
+
+  - name: Check Render deploy hook
+    env:
+      RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_PROD_DEPLOY_HOOK }}
+    run: |
+      if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+        echo "ERROR: RENDER_PROD_DEPLOY_HOOK is not configured."
+        exit 1
+      fi
+
+      echo "Render deploy hook is configured."
+
+  - name: Trigger Render deployment
+    env:
+      RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_PROD_DEPLOY_HOOK }}
+    run: |
+      echo "Triggering Render production deployment..."
+
+      curl \
+        --fail \
+        --show-error \
+        --silent \
+        --request POST \
+        "$RENDER_DEPLOY_HOOK"
+
+      echo "Render deployment triggered successfully."
+
