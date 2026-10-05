@@ -193,7 +193,7 @@ const API_URL = import.meta.env.VITE_API_URL || ''
     setMessage('Bokningen sparas...')
 
     try {
-      const response = await fetch(`${API_URL}/api/bookings`, {
+      const response =await fetch(`${API_URL}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
