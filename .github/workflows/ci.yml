@@ -1,12 +1,15 @@
+
 name: CI
 
 on:
   push:
     branches:
       - dev
+
   pull_request:
     branches:
       - dev
+
   workflow_dispatch:
 
 jobs:
@@ -60,3 +63,4 @@ jobs:
 
       - name: Build frontend
         run: npm run build
+
