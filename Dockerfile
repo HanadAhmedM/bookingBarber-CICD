@@ -1,7 +1,9 @@
+# =========================
+
+# Build frontend
 
 # =========================
-# Build frontend
-# =========================
+
 FROM node:22-alpine AS frontend-build
 
 WORKDIR /app/frontend
@@ -14,10 +16,12 @@ COPY frontend/ .
 
 RUN npm run build
 
+# =========================
+
+# Build backend
 
 # =========================
-# Build backend
-# =========================
+
 FROM maven:3.9-eclipse-temurin-21 AS backend-build
 
 WORKDIR /app/backend
@@ -30,23 +34,28 @@ COPY backend/src ./src
 
 RUN mvn clean package -DskipTests
 
+# =========================
+
+# Production
 
 # =========================
-# Production
-# =========================
+
 FROM nginx:alpine
 
-RUN apk add --no-cache openjdk21-jre supervisor
+RUN apk add --no-cache openjdk21-jre supervisor netcat-openbsd
 
 COPY --from=frontend-build /app/frontend/dist /usr/share/nginx/html
 
-COPY --from=backend-build /app/backend/target/*.jar /app/backend.jar
+COPY --from=backend-build /app/backend/target/backend-0.0.1-SNAPSHOT.jar /app/backend.jar
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 
 COPY supervisord.conf /etc/supervisord.conf
 
-EXPOSE 80
+COPY start.sh /start.sh
 
-CMD ["supervisord", "-c", "/etc/supervisord.conf"]
+RUN chmod +x /start.sh
 
+EXPOSE 10000
+
+ENTRYPOINT ["/start.sh"]
